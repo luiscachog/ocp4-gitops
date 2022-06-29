@@ -6,21 +6,20 @@ metadata:
   namespace: openshift-gitops
 spec:
   generators:
-    - clusters:
-        selector:
-          matchLabels:
-            argocd.argoproj.io/secret-type: cluster
-            demo: certificate-manager
-        values:
-          revision: HEAD
-          env: dev
+  - list:
+      elements:
+      - cluster: in-cluster-local
+        url: https://kubernetes.default.svc
+      values:
+        revision: HEAD
+        env: dev
   template:
     metadata:
-      name: '{{name}}-cert-manager'
+      name: '{{cluster}}-cert-manager'
     spec:
       destination:
         namespace: openshift-operators
-        server: '{{server}}'
+        server: '{{url}}'
       project: default
       source:
         path: 'common-base/cert-manager/overlays/{{values.env}}'
