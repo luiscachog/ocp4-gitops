@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: cost-management-appset
+  name: file-integrity-appset
   namespace: openshift-gitops
 spec:
   generators:
@@ -10,26 +10,20 @@ spec:
         selector:
           matchLabels:
             argocd.argoproj.io/secret-type: cluster
-            demo: cost-management
-        values:
-          revision: HEAD
-          env: dev
-
+            env: dev
   template:
     metadata:
-      name: '{{name}}-cost-management'
+      name: '{{name}}-file-integrity'
     spec:
       destination:
-        namespace: costmanagement-metrics-operator
+        namespace: openshift-file-integrity
         server: '{{server}}'
       project: default
       source:
-        repoURL: 'https://github.com/r3dact3d/gitops'
-        path: 'common-base/cost-management/overlays/{{values.env}}'
+        path: 'common-base/openshift-file-integrity'
+        repoURL: https://github.com/r3dact3d/gitops
         targetRevision: HEAD
       syncPolicy:
         automated:
           prune: true
           selfHeal: true
-        syncOptions:
-        - CreateNamespace=true
