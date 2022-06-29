@@ -6,11 +6,10 @@ metadata:
   namespace: openshift-gitops
 spec:
   generators:
-    - clusters:
-        selector:
-          matchLabels:
-            argocd.argoproj.io/secret-type: cluster
-            demo: certificate-manager
+    - lists:
+        elements:
+        - cluster: in-cluster-local
+          url: https://kubernetes.default.svc
         values:
           revision: HEAD
           env: dev
