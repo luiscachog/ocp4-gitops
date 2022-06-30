@@ -6,7 +6,7 @@ metadata:
   namespace: openshift-config
 data:
   ca-bundle.crt: |
-  -----BEGIN CERTIFICATE-----
+    -----BEGIN CERTIFICATE-----
     MIIGyTCCBbGgAwIBAgIQC+XnrVJ65xs9Lz691S+wTTANBgkqhkiG9w0BAQsFADBP
     MQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMSkwJwYDVQQDEyBE
     aWdpQ2VydCBUTFMgUlNBIFNIQTI1NiAyMDIwIENBMTAeFw0yMTEyMDUwMDAwMDBa
