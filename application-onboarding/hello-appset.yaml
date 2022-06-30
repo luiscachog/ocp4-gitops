@@ -5,23 +5,16 @@ metadata:
   name: hello-houston
 spec:
   generators:
-  - clusters:
-      selector:
-        matchLabels:
-          env: 'dev'
-      values:
-        revision: HEAD
-        env: dev
-  - clusters:
-      selector:
-        matchLabels:
-          env: 'prod'
-      values:
-        revision: stable
-        env: prod
+  - list:
+      elements:
+      - cluster: in-cluster-local
+        url: https://kubernetes.default.svc
+        values:
+          revision: HEAD
+          env: dev
   template:
     metadata:
-      name: 'hello-{{name}}'
+      name: 'hello-{{cluster}}'
     spec:
       source:
         repoURL: 'https://github.com/r3dact3d/animated-bassoon'
@@ -37,5 +30,5 @@ spec:
           - ApplyOutOfSyncOnly=true
           - CreateNamespace=true
       destination:
-        server: https://kubernetes.default.svc
-        namespace: 'hello-houston-{{name}}'
+        server: '{{url}}'
+        namespace: 'hello-houston-{{cluster}}'
