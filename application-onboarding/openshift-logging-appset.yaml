@@ -6,19 +6,17 @@ metadata:
   namespace: openshift-gitops
 spec:
   generators:
-    - clusters:
-        selector:
-          matchLabels:
-            argocd.argoproj.io/secret-type: cluster
-            role: infra
-            demo: logging
+  - list:
+      elements:
+      - cluster: in-cluster-local
+        url: https://kubernetes.default.svc
   template:
     metadata:
-      name: '{{name}}-openshift-logging'
+      name: '{{cluster}}-openshift-logging'
     spec:
       destination:
         namespace: openshift-logging
-        server: '{{server}}'
+        server: '{{url}}'
       project: default
       source:
         path: 'common-base/openshift-logging'
