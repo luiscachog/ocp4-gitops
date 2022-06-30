@@ -6,18 +6,17 @@ metadata:
   namespace: openshift-gitops
 spec:
   generators:
-    - clusters:
-        selector:
-          matchLabels:
-            argocd.argoproj.io/secret-type: cluster
-            role: infra
+  - list:
+      elements:
+      - cluster: in-cluster-local
+        url: https://kubernetes.default.svc
   template:
     metadata:
-      name: '{{name}}-ingress-controller'
+      name: '{{cluster}}-ingress-controller'
     spec:
       destination:
         namespace: openshift-ingress-operator
-        server: '{{server}}'
+        server: '{{url}}'
       project: default
       source:
         repoURL: 'https://github.com/r3dact3d/gitops'
