@@ -6,18 +6,17 @@ metadata:
   namespace: openshift-gitops
 spec:
   generators:
-    - clusters:
-        selector:
-          matchLabels:
-            argocd.argoproj.io/secret-type: cluster
-            demo: namespace-config
+  - list:
+      elements:
+      - cluster: in-cluster-local
+        url: https://kubernetes.default.svc
   template:
     metadata:
-      name: '{{name}}-namespace-config'
+      name: '{{cluster}}-namespace-config'
     spec:
       destination:
         namespace: namespace-configuration-operator
-        server: '{{server}}'
+        server: '{{url}}'
       project: default
       source:
         repoURL: 'https://github.com/r3dact3d/gitops'
