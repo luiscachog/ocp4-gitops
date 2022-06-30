@@ -10,9 +10,9 @@ spec:
       elements:
       - cluster: in-cluster-local
         url: https://kubernetes.default.svc
-      values:
-        revision: HEAD
-        env: dev
+        values:
+          revision: HEAD
+          env: dev
   template:
     metadata:
       name: '{{cluster}}-cert-manager'
